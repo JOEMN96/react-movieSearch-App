@@ -1,18 +1,40 @@
 import React, { useReducer } from "react";
-import reducer from "../configs/Reducer";
-export const Context = React.createContext();
 
-const initialState = [
-  {
-    aa: "hjjio",
-  },
-];
+export const GlobolContext = React.createContext();
 
-export const Store = (props) => {
-  const [globolState, dispatch] = useReducer(reducer, initialState);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SEARCH":
+      return {
+        ...state,
+        searchVal: action.payload,
+        loading: true,
+      };
+    case "MOVIELIST":
+      return {
+        ...state,
+        movieLists: [action.payload],
+      };
+    case "LOADINGOFF":
+      return {
+        ...state,
+        loading: action.payload,
+      };
+  }
+};
+
+const initial = {
+  searchVal: "",
+  loading: false,
+  movieLists: [],
+};
+
+export const GlobolContextProvider = (props) => {
+  const [state, dispatch] = useReducer(reducer, initial);
+
   return (
-    <Context.Provider value={{ globolState, dispatch }}>
+    <GlobolContext.Provider value={{ state, dispatch }}>
       {props.children}
-    </Context.Provider>
+    </GlobolContext.Provider>
   );
 };

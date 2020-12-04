@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { Store } from "./configs/Store";
+import { GlobolContextProvider } from "./configs/Store";
 
 ReactDOM.render(
-  <Store>
+  <GlobolContextProvider>
     <React.StrictMode>
       <App />
     </React.StrictMode>
-  </Store>,
+  </GlobolContextProvider>,
   document.getElementById("root")
 );

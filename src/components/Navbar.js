@@ -1,14 +1,30 @@
 import React, { useContext, useState } from "react";
-import { Context } from "../configs/Store";
-
+import { GlobolContext } from "../configs/Store";
+import axios from "axios";
 function Navbar() {
-  let { globolState, dispatch } = useContext(Context);
-  const [searchTerm, setSearchTerm] = useState("");
-  console.log(globolState);
+  const { dispatch, state } = useContext(GlobolContext);
+  const [movieName, setmovieName] = useState("");
+  function fetchMovies(term) {
+    let url = process.env.REACT_APP_API;
+    const movieData = axios
+      .get(
+        `http://www.omdbapi.com/?apikey=${url}&s=${term}
+    `
+      )
+      .then((data) => {
+        dispatch({ type: "MOVIELIST", payload: data });
+      })
+      .catch((err) => console.log(err));
+  }
+
   const handleSub = (e) => {
     e.preventDefault();
-    dispatch({ type: "ADD", payload: searchTerm });
+    dispatch({ type: "SEARCH", payload: movieName });
+    fetchMovies(movieName);
+    dispatch({ type: "LOADINGOFF", payload: false });
   };
+
+  console.log(state);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <b className="navbar-brand" href="#">
@@ -45,8 +61,8 @@ function Navbar() {
             type="search"
             placeholder="Search"
             aria-label="Search"
-            onChange={(e) => setSearchTerm(e.target.value)}
             required
+            onChange={(e) => setmovieName(e.target.value)}
           />
           <button
             className="btn btn-outline-success my-2 my-sm-0"
