@@ -1,27 +1,7 @@
 import React, { useReducer } from "react";
+import Reducer from "../configs/Reducer";
 
 export const GlobolContext = React.createContext();
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "SEARCH":
-      return {
-        ...state,
-        searchVal: action.payload,
-        loading: true,
-      };
-    case "MOVIELIST":
-      return {
-        ...state,
-        movieLists: [action.payload],
-      };
-    case "LOADINGOFF":
-      return {
-        ...state,
-        loading: action.payload,
-      };
-  }
-};
 
 const initial = {
   searchVal: "",
@@ -30,7 +10,7 @@ const initial = {
 };
 
 export const GlobolContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, initial);
+  const [state, dispatch] = useReducer(Reducer, initial);
 
   return (
     <GlobolContext.Provider value={{ state, dispatch }}>

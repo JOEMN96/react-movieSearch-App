@@ -2,29 +2,28 @@ import React, { useContext, useState } from "react";
 import { GlobolContext } from "../configs/Store";
 import axios from "axios";
 function Navbar() {
-  const { dispatch, state } = useContext(GlobolContext);
+  const { dispatch } = useContext(GlobolContext);
   const [movieName, setmovieName] = useState("");
   function fetchMovies(term) {
     let url = process.env.REACT_APP_API;
-    const movieData = axios
+    axios
       .get(
         `http://www.omdbapi.com/?apikey=${url}&s=${term}
     `
       )
       .then((data) => {
-        dispatch({ type: "MOVIELIST", payload: data });
+        dispatch({ type: "MOVIELIST", payload: { data, loading: false } });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err, "errrrr"));
   }
 
   const handleSub = (e) => {
     e.preventDefault();
     dispatch({ type: "SEARCH", payload: movieName });
     fetchMovies(movieName);
-    dispatch({ type: "LOADINGOFF", payload: false });
+    dispatch({ type: "LOADINGOFF", payload: true });
   };
 
-  console.log(state);
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <b className="navbar-brand" href="#">
