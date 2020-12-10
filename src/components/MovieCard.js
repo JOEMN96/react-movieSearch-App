@@ -1,10 +1,9 @@
 import React from "react";
 import noImg from "../assets/600px-No_image_available.svg.webp";
+import { Link } from "react-router-dom";
 
 function MovieCard({ movie }) {
   let { Title, Year, Type, Poster, imdbID } = movie;
-
-  let url = `http://www.omdbapi.com/?apikey=5db5b49b&i=${imdbID}`;
 
   if (Poster === "N/A") {
     Poster = noImg;
@@ -14,13 +13,13 @@ function MovieCard({ movie }) {
     <div className="col-md-4">
       <div className="movie-card">
         <div className="movie-header ">
-          <img src={Poster} className="babyDriver" alt="" />
+          <img src={Poster} className="babyDriver" alt={Title} />
         </div>
         <div className="movie-content">
           <div className="movie-content-header">
-            <a href="#">
-              <h3 className="movie-title">{Title}</h3>
-            </a>
+            <h3 className="movie-title">
+              <Link to={"/movie/" + imdbID}> {Title}</Link>
+            </h3>
           </div>
           <div className="movie-info">
             <div className="info-section">
@@ -32,8 +31,10 @@ function MovieCard({ movie }) {
               <span>{Type} </span>
             </div>
             <div className="info-section">
-              <label>Learn More</label>
-              <span>{Type} </span>
+              <label>More</label>
+              <span>
+                <Link to={"/movie/" + imdbID}>Learn More</Link>
+              </span>
             </div>
           </div>
         </div>
