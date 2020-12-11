@@ -8,7 +8,7 @@ function Navbar() {
     let url = process.env.REACT_APP_API;
     axios
       .get(
-        `http://www.omdbapi.com/?apikey=${url}&s=${term}
+        `http://www.omdbapi.com/?apikey=5db5b49b&s=${term}
     `
       )
       .then((data) => {
