@@ -6,7 +6,7 @@ function SingleMovieComp({ match }) {
   const [isLoading, setisLoading] = useState(true);
   const id = match.params.id;
   let key = process.env.REACT_APP_API;
-  let url = `http://www.omdbapi.com/?apikey=${key}&i=${id}`;
+  let url = `http://www.omdbapi.com/?apikey=5db5b49b&i=${id}`;
 
   useEffect(() => {
     axios.get(url).then((res) => {
